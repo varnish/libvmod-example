@@ -1,5 +1,5 @@
 Summary: Example VMOD for Varnish
-Name: vmod-varnish-%{VARNISHVER}-example
+Name: vmod-example
 Version: 0.1
 Release: 1%{?dist}
 License: BSD
