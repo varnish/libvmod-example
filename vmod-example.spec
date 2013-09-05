@@ -16,6 +16,10 @@ Example VMOD
 %setup -n libvmod-example
 
 %build
+# XXX: hack for 3.x and mock
+if [ -n "%{VARNISH_CP_SRC}" ]; then
+    cp -va "%{VARNISH_CP_SRC}" "%{VARNISHSRC}"
+fi
 # this assumes that VARNISHSRC is defined on the rpmbuild command line, like this:
 # rpmbuild -bb --define 'VARNISHSRC /home/user/rpmbuild/BUILD/varnish-3.0.3' redhat/*spec
 ./configure VARNISHSRC=%{VARNISHSRC} VMODDIR="$(PKG_CONFIG_PATH=%{VARNISHSRC} pkg-config --variable=vmoddir varnishapi)" --prefix=/usr/
