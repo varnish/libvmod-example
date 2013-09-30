@@ -1,4 +1,4 @@
-INCLUDES = -I$(VARNISHSRC)/include -I$(VARNISHSRC)
+AM_CPPFLAGS = -I$(VARNISHSRC)/include -I$(VARNISHSRC)
 
 vmoddir = $(VMODDIR)
 vmod_LTLIBRARIES = libvmod_example.la
