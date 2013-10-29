@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 export DH_VERBOSE=1
 
-PACKAGE=$(awk -F: '$$1 == "Package" {print $$2}' debian/control)
+PACKAGE=$(shell awk -F: '$$1 == "Package" {print $$2}' debian/control)
 VARNISHSRC = $(DEBIAN_VARNISH_SRC)
 VMODDIR = $(shell PKG_CONFIG_PATH="$(VARNISHSRC)" pkg-config --variable=vmoddir varnishapi)
 VMOD_ABI = $(shell printf '\#include "vmod_abi.h"\nVMOD_ABI_Version' | cpp - -I$(DEBIAN_VARNISH_SRC)/include | sed '/^\#/D;s/"//g;s/\([A-Z]\)/\L\1/g;s/[^a-z0-9.]/-/g;s/varnish/varnishabi/')
