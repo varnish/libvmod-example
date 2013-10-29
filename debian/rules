@@ -3,7 +3,7 @@ export DH_VERBOSE=1
 
 VARNISHSRC = $(DEBIAN_VARNISH_SRC)
 VMODDIR = $(shell PKG_CONFIG_PATH="$(VARNISHSRC)" pkg-config --variable=vmoddir varnishapi)
-VMOD_ABI = $(shell printf '#include "vmod_abi.h"\nVMOD_ABI_Version' | cpp - -I$(DEBIAN_VARNISH_SRC)/include | sed '/^#/D;s/"//g;s/\([A-Z]\)/\L\1/g;s/[^a-z0-9.]/-/g;s/varnish/varnishabi/')
+VMOD_ABI = $(shell printf '\#include "vmod_abi.h"\nVMOD_ABI_Version' | cpp - -I$(DEBIAN_VARNISH_SRC)/include | sed '/^\#/D;s/"//g;s/\([A-Z]\)/\L\1/g;s/[^a-z0-9.]/-/g;s/varnish/varnishabi/')
 
 override_dh_auto_configure:
 	dh_auto_configure -- VMODDIR="$(VMODDIR)" VARNISHSRC="$(VARNISHSRC)"
