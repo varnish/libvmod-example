@@ -14,7 +14,7 @@ override_dh_gencontrol:
 	if [ -n "$$DEBIAN_OVERRIDE_BINARY_VERSION" ]; then \
 		dh_gencontrol -- -Tdebian/substvars -v$$DEBIAN_OVERRIDE_BINARY_VERSION; \
 	else \
-		dh_gencontrol -Tdebian/substvars; \
+		dh_gencontrol -- -Tdebian/substvars; \
 	fi
 
 %:
