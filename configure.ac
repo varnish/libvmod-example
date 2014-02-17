@@ -61,7 +61,7 @@ AC_ARG_VAR([VMODDIR], [vmod installation directory @<:@LIBDIR/varnish/vmods@:>@]
 if test "x$VMODDIR" = x; then
 	VMODDIR=`pkg-config --variable=vmoddir varnishapi`
 	if test "x$VMODDIR" = x; then
-		AC_MSG_FAILURE([Can't determine vmod installation directory])
+		AC_MSG_FAILURE([Can't determine vmod installation directory through pkgconfig])
 	fi
 fi
 
