@@ -31,7 +31,7 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-%{_libdir}/varnish/vmods/
+%{_libdir}/varnis*/vmods/
 %doc /usr/share/doc/%{name}/*
 %{_mandir}/man?/*
 
