@@ -20,7 +20,7 @@ DESCRIPTION
 ===========
 
 Example Varnish vmod demonstrating how to write an out-of-tree Varnish vmod
-for Varnish 3.0 and later.
+for Varnish 3.0.
 
 Implements the traditional Hello World as a vmod.
 
