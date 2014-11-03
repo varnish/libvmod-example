@@ -1,4 +1,4 @@
-libvmod-example (0.2); urgency=medium
+libvmod-example (0.2) unstable; urgency=medium
 
   * Packaging bump, no changes.
 
