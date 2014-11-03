@@ -1,7 +1,7 @@
 Summary: Example VMOD for Varnish
 Name: vmod-example
-Version: 0.1
-Release: 2%{?dist}
+Version: 0.2
+Release: 1%{?dist}
 License: BSD
 Group: System Environment/Daemons
 Source0: libvmod-example.tar.gz
