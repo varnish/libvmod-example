@@ -20,7 +20,7 @@ You can even have links and lists in here:
 
 The init-function declared next does not have documentation.
 
-$Init init_function
+$Event init_function
 $Function STRING hello(STRING)
 
 The different functions provided by the VMOD should also have their own
