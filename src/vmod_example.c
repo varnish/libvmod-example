@@ -8,7 +8,8 @@
 #include "vcc_if.h"
 
 int
-init_function(const struct vrt_ctx *ctx, struct vmod_priv *priv, enum vcl_event_e e)
+init_function(const struct vrt_ctx *ctx, struct vmod_priv *priv,
+    enum vcl_event_e e)
 {
 	if (e != VCL_EVENT_LOAD)
 		return (0);
