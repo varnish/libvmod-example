@@ -12,15 +12,19 @@ nodist_libvmod_example_la_SOURCES = \
 	vcc_if.c \
 	vcc_if.h
 
-vmod_example.lo: vcc_if.c vcc_if.h
+dist_man_MANS = vmod_example.3
 
-vcc_if.c: vcc_if.h
+vmod_example.3: vmod_example.man.rst
+	${RST2MAN} $< $@
 
-vcc_if.h: @VMODTOOL@ $(top_srcdir)/src/vmod_example.vcc
+
+vmod_example.lo vmod_example.man.rst: vcc
+
+vcc: @VMODTOOL@ $(top_srcdir)/src/vmod_example.vcc
 	@VMODTOOL@ $(top_srcdir)/src/vmod_example.vcc
 
 VMOD_TESTS = $(top_srcdir)/src/tests/*.vtc
-.PHONY: $(VMOD_TESTS)
+.PHONY: $(VMOD_TESTS) vcc
 
 $(top_srcdir)/src/tests/*.vtc: libvmod_example.la
 	@VARNISHTEST@ -Dvarnishd=@VARNISHD@ -Dvmod_topbuild=$(abs_top_builddir) $@
@@ -35,4 +39,5 @@ CLEANFILES = \
 	$(builddir)/vcc_if.c \
 	$(builddir)/vcc_if.h \
 	$(builddir)/vmod_example.rst \
-	$(builddir)/vmod_example.man.rst
+	$(builddir)/vmod_example.man.rst \
+	$(dist_man_MANS)
