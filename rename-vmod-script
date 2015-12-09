@@ -29,7 +29,6 @@ fi
 
 git mv src/vmod_example.c src/vmod_${SYM_NAME}.c
 git mv src/vmod_example.vcc src/vmod_${SYM_NAME}.vcc
-git mv vmod-example.spec vmod-${SYM_NAME}.spec
 
 git grep -z -l example | xargs -0 sed -i -s -e "s/example/${SYM_NAME}/g"
 git grep -z -l Example | xargs -0 sed -i -s -e "s/Example/${CAP_NAME}/g"
