@@ -51,6 +51,10 @@ using the ``varnishtest`` tool.
 Building requires the Varnish header files and uses pkg-config to find
 the necessary paths.
 
+Pre-requisites::
+
+ sudo apt-get install -y autotools-dev make automake libtool pkg-config libvarnishapi1 libvarnishapi-dev
+
 Usage::
 
  ./autogen.sh
