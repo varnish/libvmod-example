@@ -9,6 +9,9 @@
 int
 init_function(struct vmod_priv *priv, const struct VCL_conf *conf)
 {
+
+	(void)priv;
+	(void)conf;
 	return (0);
 }
 

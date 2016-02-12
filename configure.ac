@@ -1,5 +1,5 @@
 AC_PREREQ(2.59)
-AC_COPYRIGHT([Copyright (c) 2011-2015 Varnish Software AS])
+AC_COPYRIGHT([Copyright (c) 2011-2016 Varnish Software AS])
 AC_INIT([libvmod-example], [0.1])
 AC_CONFIG_MACRO_DIR([m4])
 m4_ifndef([VARNISH_VMOD_INCLUDES], AC_MSG_ERROR([Need varnish.m4 -- see README.rst]))
@@ -32,9 +32,14 @@ AC_PROG_MAKE_SET
 
 # Check for rst utilities
 AC_CHECK_PROGS(RST2MAN, [rst2man rst2man.py], "no")
+AM_CONDITIONAL(HAVE_RST2MAN, [test "x$RST2MAN" != "xno"])
 if test "x$RST2MAN" = "xno"; then
-	AC_MSG_ERROR([rst2man not found - cannot build man pages])
+	AC_MSG_WARN([rst2man not found - cannot build man pages])
 fi
+
+# Test suite
+VTC_TESTS="$(cd $srcdir/src && echo tests/*.vtc)"
+AC_SUBST(VTC_TESTS)
 
 # Checks for header files.
 AC_HEADER_STDC
@@ -73,10 +78,7 @@ VARNISH_VMODTOOL
 # acessing ac_ variable because AC_PREFIX_DEFAULT acts too early
 ac_default_prefix=$LIBVARNISHAPI_PREFIX
 
-AC_PATH_PROG([VARNISHTEST], [varnishtest], [],
-    [$LIBVARNISHAPI_BINDIR:$LIBVARNISHAPI_SBINDIR:$PATH])
-AC_PATH_PROG([VARNISHD], [varnishd], [],
-    [$LIBVARNISHAPI_SBINDIR:$LIBVARNISHAPI_BINDIR:$PATH])
+AC_SUBST([TEST_PATH], [$LIBVARNISHAPI_SBINDIR:$LIBVARNISHAPI_BINDIR:$PATH])
 
 AC_CONFIG_FILES([
 	Makefile
