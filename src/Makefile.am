@@ -28,9 +28,12 @@ nodist_libvmod_example_la_SOURCES = \
 
 $(srcdir)/vmod_example.c: $(VCC_FILES)
 
-$(VCC_FILES) $(DOC_FILES): vmod_example.vcc
+$(VCC_FILES) $(DOC_FILES): .vcc
+
+.vcc: vmod_example.vcc
 	@echo vmodtool: @VMODTOOL@ $<
 	@@PYTHON@ @VMODTOOL@ $<
+	@touch $@
 
 # Documentation
 
@@ -68,4 +71,5 @@ EXTRA_DIST = \
 CLEANFILES = \
 	$(VCC_FILES) \
 	$(DOC_FILES) \
-	$(dist_man_MANS)
+	$(dist_man_MANS) \
+	.vcc
