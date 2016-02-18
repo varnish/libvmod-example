@@ -1,4 +1,5 @@
-AM_CPPFLAGS = @VMOD_INCLUDES@ -Wall -Werror -Wextra
+AM_CPPFLAGS = @VMOD_INCLUDES@
+AM_CFLAGS = -Wall -Werror -Wextra
 
 # VMOD library
 
