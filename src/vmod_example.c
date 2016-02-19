@@ -1,14 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "vcl.h"
 #include "vrt.h"
 #include "cache/cache.h"
 
 #include "vcc_if.h"
 
-int
-init_function(struct vmod_priv *priv, const struct VCL_conf *conf)
+int __match_proto__(vmod_event_f)
+vmod_event(VRT_CTX, struct vmod_priv *priv, enum vcl_event_e e)
 {
+
+	(void)ctx;
+	(void)priv;
+	(void)e;
 	return (0);
 }
 

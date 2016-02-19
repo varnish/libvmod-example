@@ -1,43 +1,68 @@
-AM_CPPFLAGS = @VMOD_INCLUDES@ -Wall -Werror
+AM_CPPFLAGS = @VMOD_INCLUDES@
+AM_CFLAGS = -Wall -Werror -Wextra
+
+# VMOD library
 
 vmoddir = @VMOD_DIR@
 vmod_LTLIBRARIES = libvmod_example.la
 
-libvmod_example_la_LDFLAGS = -module -export-dynamic -avoid-version -shared
+VCC_FILES = \
+	vcc_if.c \
+	vcc_if.h
+
+DOC_FILES = \
+	vmod_example.rst \
+	vmod_example.man.rst
+
+libvmod_example_la_LDFLAGS = \
+	-module \
+	-export-dynamic \
+	-avoid-version \
+	-shared
 
 libvmod_example_la_SOURCES = \
 	vmod_example.c
 
 nodist_libvmod_example_la_SOURCES = \
-	vcc_if.c \
-	vcc_if.h
+	$(VCC_FILES)
+
+$(srcdir)/vmod_example.c: $(VCC_FILES)
+
+$(VCC_FILES) $(DOC_FILES): .vcc
+
+.vcc: vmod_example.vcc
+	@echo vmodtool: @VMODTOOL@ $<
+	@@PYTHON@ @VMODTOOL@ $<
+	@touch $@
+
+# Documentation
 
 dist_man_MANS = vmod_example.3
 
-vmod_example.3: vmod_example.man.rst
+%.3: %.man.rst
 	${RST2MAN} $< $@
 
+# Test suite
 
-vmod_example.lo vmod_example.man.rst: vcc
+VMOD_FILE="$(abs_builddir)/.libs/libvmod_example.so"
 
-vcc: @VMODTOOL@ $(top_srcdir)/src/vmod_example.vcc
-	@PYTHON@ @VMODTOOL@ $(top_srcdir)/src/vmod_example.vcc
+VTC_LOG_COMPILER = \
+	env PATH="@TEST_PATH@" \
+	varnishtest -v \
+	-Dvmod_example="example from \"$(VMOD_FILE)\""
 
-VMOD_TESTS = $(top_srcdir)/src/tests/*.vtc
-.PHONY: $(VMOD_TESTS) vcc
+TEST_EXTENSIONS = .vtc
 
-$(top_srcdir)/src/tests/*.vtc: libvmod_example.la
-	@VARNISHTEST@ -Dvarnishd=@VARNISHD@ -Dvmod_topbuild=$(abs_top_builddir) $@
+TESTS = @VTC_TESTS@
 
-check: $(VMOD_TESTS)
+# misc
 
 EXTRA_DIST = \
 	vmod_example.vcc \
-	$(VMOD_TESTS)
+	$(TESTS)
 
 CLEANFILES = \
-	$(builddir)/vcc_if.c \
-	$(builddir)/vcc_if.h \
-	$(builddir)/vmod_example.rst \
-	$(builddir)/vmod_example.man.rst \
-	$(dist_man_MANS)
+	$(VCC_FILES) \
+	$(DOC_FILES) \
+	$(dist_man_MANS) \
+	.vcc

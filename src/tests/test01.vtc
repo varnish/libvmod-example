@@ -6,7 +6,7 @@ server s1 {
 } -start
 
 varnish v1 -vcl+backend {
-	import example from "${vmod_topbuild}/src/.libs/libvmod_example.so";
+	import ${vmod_example};
 
 	sub vcl_deliver {
 		set resp.http.hello = example.hello("World");
