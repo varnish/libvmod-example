@@ -21,7 +21,7 @@ vmod_example.3: vmod_example.man.rst
 vmod_example.lo vmod_example.man.rst: vcc
 
 vcc: @VMODTOOL@ $(top_srcdir)/src/vmod_example.vcc
-	@VMODTOOL@ $(top_srcdir)/src/vmod_example.vcc
+	@PYTHON@ @VMODTOOL@ $(top_srcdir)/src/vmod_example.vcc
 
 VMOD_TESTS = $(top_srcdir)/src/tests/*.vtc
 .PHONY: $(VMOD_TESTS) vcc
