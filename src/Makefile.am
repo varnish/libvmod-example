@@ -27,7 +27,8 @@ VMOD_TESTS = $(top_srcdir)/src/tests/*.vtc
 .PHONY: $(VMOD_TESTS) vcc
 
 $(top_srcdir)/src/tests/*.vtc: libvmod_example.la
-	@VARNISHTEST@ -Dvarnishd=@VARNISHD@ -Dvmod_topbuild=$(abs_top_builddir) $@
+	PATH=@LIBVARNISHAPI_SBINDIR@:$$PATH \
+	@VARNISHTEST@ -Dvmod_topbuild=$(abs_top_builddir) $@
 
 check: $(VMOD_TESTS)
 
