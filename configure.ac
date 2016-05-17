@@ -40,6 +40,9 @@ fi
 AC_HEADER_STDC
 AC_CHECK_HEADERS([sys/stdlib.h])
 
+VMOD_TESTS="$(cd $srcdir/src && echo tests/*.vtc)"
+AC_SUBST(VMOD_TESTS)
+
 # backwards compat with older pkg-config
 # - pull in AC_DEFUN from pkg.m4
 m4_ifndef([PKG_CHECK_VAR], [
@@ -73,10 +76,8 @@ VARNISH_VMODTOOL
 # acessing ac_ variable because AC_PREFIX_DEFAULT acts too early
 ac_default_prefix=$LIBVARNISHAPI_PREFIX
 
-AC_PATH_PROG([VARNISHTEST], [varnishtest], [],
-    [$LIBVARNISHAPI_BINDIR:$LIBVARNISHAPI_SBINDIR:$PATH])
-AC_PATH_PROG([VARNISHD], [varnishd], [],
-    [$LIBVARNISHAPI_SBINDIR:$LIBVARNISHAPI_BINDIR:$PATH])
+AC_PATH_PROG([VARNISHTEST], [varnishtest], [], [$LIBVARNISHAPI_BINDIR:$PATH])
+AC_PATH_PROG([VARNISHD], [varnishd], [], [$LIBVARNISHAPI_SBINDIR:$PATH])
 
 AC_CONFIG_FILES([
 	Makefile
