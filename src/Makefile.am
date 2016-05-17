@@ -19,10 +19,11 @@ dist_man_MANS = vmod_example.3
 vmod_example.3: vmod_example.man.rst
 	${RST2MAN} $< $@
 
+vmod_example.lo: vcc_if.c
 
-vmod_example.lo vmod_example.man.rst: vcc
+vmod_example.man.rst vcc_if.c: vcc_if.h
 
-vcc: @VMODTOOL@ $(top_srcdir)/src/vmod_example.vcc
+vcc_if.h: @VMODTOOL@ $(top_srcdir)/src/vmod_example.vcc
 	@PYTHON@ @VMODTOOL@ $(top_srcdir)/src/vmod_example.vcc
 
 VTC_LOG_COMPILER = $(VARNISHTEST) -v \
@@ -30,7 +31,7 @@ VTC_LOG_COMPILER = $(VARNISHTEST) -v \
 TEST_EXTENSIONS = .vtc
 TESTS = @VMOD_TESTS@
 
-@VMOD_TESTS@: vcc
+@VMOD_TESTS@: vmod_example.lo
 
 EXTRA_DIST = \
 	vmod_example.vcc \
