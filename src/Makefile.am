@@ -1,5 +1,7 @@
 AM_CPPFLAGS = @VMOD_INCLUDES@ -Wall -Werror
 
+TESTS_ENVIRONMENT = PATH=$(LIBVARNISHAPI_BINDIR):$(LIBVARNISHAPI_SBINDIR):$$PATH
+
 vmoddir = @VMOD_DIR@
 vmod_LTLIBRARIES = libvmod_example.la
 
@@ -23,13 +25,12 @@ vmod_example.lo vmod_example.man.rst: vcc
 vcc: @VMODTOOL@ $(top_srcdir)/src/vmod_example.vcc
 	@PYTHON@ @VMODTOOL@ $(top_srcdir)/src/vmod_example.vcc
 
-VMOD_TESTS = $(top_srcdir)/src/tests/*.vtc
-.PHONY: $(VMOD_TESTS) vcc
+VTC_LOG_COMPILER = $(VARNISHTEST) -v \
+	-Dvmod_topbuild=$(abs_top_builddir)
+TEST_EXTENSIONS = .vtc
+TESTS = @VMOD_TESTS@
 
-$(top_srcdir)/src/tests/*.vtc: libvmod_example.la
-	@VARNISHTEST@ -Dvarnishd=@VARNISHD@ -Dvmod_topbuild=$(abs_top_builddir) $@
-
-check: $(VMOD_TESTS)
+@VMOD_TESTS@: vcc
 
 EXTRA_DIST = \
 	vmod_example.vcc \

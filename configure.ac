@@ -40,6 +40,9 @@ fi
 AC_HEADER_STDC
 AC_CHECK_HEADERS([sys/stdlib.h])
 
+VMOD_TESTS="$(cd $srcdir/src && echo tests/*.vtc)"
+AC_SUBST(VMOD_TESTS)
+
 # backwards compat with older pkg-config
 # - pull in AC_DEFUN from pkg.m4
 m4_ifndef([PKG_CHECK_VAR], [
